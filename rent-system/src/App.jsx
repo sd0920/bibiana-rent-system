@@ -33,8 +33,6 @@ export default function App() {
   const [adminPass, setAdminPass] = useState("");
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
   const [reg, setReg] = useState({ name: "", loc: "Dar es Salaam", house: "", room: "", rent: 0 });
-  const [loginId, setLoginId] = useState("");
-  const [portalUser, setPortalUser] = useState(null);
 
   useEffect(() => {
     onSnapshot(collection(db, "tenants"), (s) => {
@@ -60,13 +58,12 @@ export default function App() {
       {/* --- HEADER --- */}
       <header className="bg-[#0f172a] text-white p-5 shadow-lg flex justify-between items-center px-10 z-50">
         <h1 className="text-xl font-black tracking-tighter">BIBIANA HOUSE RENT SYSTEM</h1>
-        <button onClick={() => setView('home')} className="text-sm font-bold bg-white/10 px-4 py-2 rounded-lg hover:bg-white/20 transition-all">HOME</button>
+        <button onClick={() => setView('home')} className="text-sm font-bold bg-white/10 px-4 py-2 rounded-lg hover:bg-white/20">HOME</button>
       </header>
 
-      {/* --- MAIN CONTENT AREA --- */}
       <div className="flex-1 flex overflow-hidden">
         
-        {/* SIDEBAR (Hidden on Home) */}
+        {/* SIDEBAR */}
         {view !== 'home' && (
           <aside className="w-72 bg-[#1e293b] text-slate-300 hidden lg:block overflow-y-auto shadow-2xl">
             <nav className="p-4 space-y-2 mt-4">
@@ -81,24 +78,22 @@ export default function App() {
           </aside>
         )}
 
-        {/* PAGE CONTENT */}
-        <main className="flex-1 overflow-y-auto">
+        {/* MAIN CONTENT */}
+        <main className="flex-1 overflow-y-auto bg-slate-50">
           {view === 'home' ? (
-            /* --- LANDING PAGE --- */
             <div className="h-full bg-black relative flex items-center justify-center text-center">
-              <div className="absolute inset-0 opacity-50 bg-[url('https://images.unsplash.com/photo-1568605114967-8130f3a36994')] bg-cover bg-center"></div>
+              <div className="absolute inset-0 opacity-50 bg-[url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1973&auto=format&fit=crop')] bg-cover bg-center"></div>
               <div className="relative z-10 p-10">
                 <h2 className="text-5xl font-black text-white mb-6">Welcome to Bibiana House</h2>
-                <p className="text-slate-300 mb-10 text-lg">Efficient Rental Management at your fingertips.</p>
                 <div className="flex gap-4 justify-center">
-                  <button onClick={() => setView('dashboard')} className="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold shadow-xl hover:scale-105 transition-transform">ADMIN LOGIN</button>
-                  <button onClick={() => setView('portal')} className="bg-white text-slate-900 px-8 py-4 rounded-2xl font-bold shadow-xl hover:scale-105 transition-transform">TENANT PORTAL</button>
+                  <button onClick={() => setView('dashboard')} className="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold shadow-xl">ADMIN LOGIN</button>
+                  <button onClick={() => setView('portal')} className="bg-white text-slate-900 px-8 py-4 rounded-2xl font-bold shadow-xl">TENANT PORTAL</button>
                 </div>
               </div>
             </div>
           ) : (
             <div className="p-6 lg:p-10">
-              {/* ADMIN AUTH CHECK */}
+              {/* ADMIN LOGIN WALL */}
               {(view !== 'portal' && !isAdminLoggedIn) ? (
                 <div className="max-w-md mx-auto mt-20 p-10 bg-white rounded-3xl shadow-xl border text-center">
                   <div className="text-4xl mb-4">🔐</div>
@@ -108,6 +103,7 @@ export default function App() {
                 </div>
               ) : (
                 <>
+                  {/* SWITCHING VIEWS LOGIC */}
                   {view === 'dashboard' && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
                       <Tile bg="bg-blue-500" icon="🏢" label="Total Houses" val={tenants.length} />
@@ -132,7 +128,7 @@ export default function App() {
                   {view === 'houses' && <HouseManagement />}
                   {view === 'rooms' && <RoomStatus />}
                   {view === 'payments' && <PaymentHistory />}
-                  {view === 'settings' && <div className="p-10 bg-white rounded-xl border font-bold text-center">Admin Settings Module Coming Soon</div>}
+                  {view === 'settings' && <div className="p-10 bg-white rounded-xl border text-center">Settings Coming Soon</div>}
                 </>
               )}
             </div>
@@ -142,9 +138,10 @@ export default function App() {
 
       {/* --- FOOTER --- */}
       <footer className="bg-[#0f172a] text-slate-400 p-6 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center px-10">
-        <p className="text-[10px] font-bold uppercase tracking-widest">© 2026 BIBIANA HOUSE RENT SYSTEM. All Rights Reserved.</p>
+        <p className="text-[10px] font-bold uppercase tracking-widest">© 2026 BIBIANA HOUSE RENT SYSTEM</p>
         <div className="flex gap-6 text-xl mt-4 md:mt-0">
-          <a href="#" className="hover:text-green-500"><FaWhatsapp /></a>
+          {/* WHATSAPP LINK UPDATED */}
+          <a href="https://wa.me/255756986000" target="_blank" rel="noreferrer" className="hover:text-green-500"><FaWhatsapp /></a>
           <a href="#" className="hover:text-blue-500"><FaFacebook /></a>
           <a href="#" className="hover:text-rose-500"><FaInstagram /></a>
           <a href="#" className="hover:text-red-600"><FaYoutube /></a>
