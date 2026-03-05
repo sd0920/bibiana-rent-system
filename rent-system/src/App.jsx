@@ -1,3 +1,5 @@
+// Add these for the social icons (optional, or use emojis for now)
+import { FaWhatsapp, FaFacebook, FaYoutube, FaTiktok, FaInstagram, FaTwitter } from 'react-icons/fa';
 import HouseManagement from './HouseManagement'; // Fixed path based on your VS Code screen
 import RoomStatus from './RoomStatus';
 import PaymentHistory from './PaymentHistory';
@@ -7,7 +9,7 @@ import { collection, onSnapshot, addDoc, query, orderBy, doc, deleteDoc } from '
 
 export default function App() {
   // 1. Updated 'view' state to handle more pages
-  const [view, setView] = useState('dashboard'); 
+  const [view, setView] = useState('home'); // Change 'admin' to 'home' 
   const [tenants, setTenants] = useState([]);
   const [activeTenant, setActiveTenant] = useState(null);
   const [payments, setPayments] = useState([]);
@@ -46,31 +48,66 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] flex text-slate-800 font-sans">
+  <div className="min-h-screen flex flex-col font-sans">
+    
+    {/* --- HEADER --- */}
+    <header className="bg-[#0f172a] text-white p-5 shadow-lg flex justify-between items-center px-10">
+      <h1 className="text-xl font-black tracking-tighter">BIBIANA HOUSE RENT SYSTEM</h1>
+      <button onClick={() => setView('home')} className="text-sm font-bold opacity-70 hover:opacity-100">HOME</button>
+    </header>
+
+    {/* --- MAIN CONTENT AREA --- */}
+    <main className="flex-1 flex overflow-hidden">
       
-      {/* SIDEBAR - Updated with new links */}
-      <div className="w-72 bg-[#1e293b] text-slate-300 hidden lg:block shadow-2xl print:hidden">
-        <div className="p-6 bg-[#0f172a] flex items-center gap-3">
-          <div className="w-8 h-8 bg-blue-500 rounded flex items-center justify-center text-white font-bold">B</div>
-          <h1 className="text-lg font-bold text-white tracking-widest">BIBIANA RENT</h1>
+      {/* Show Sidebar ONLY if NOT on Home Page */}
+      {view !== 'home' && (
+        <div className="w-72 bg-[#1e293b] text-slate-300 hidden lg:block">
+           {/* ... paste your existing Sidebar <nav> code here ... */}
         </div>
-        <nav className="p-4 space-y-2 mt-4">
-          <button onClick={() => {setView('dashboard'); setShowReg(false)}} className={`w-full text-left p-3 rounded-lg flex items-center gap-3 ${view === 'dashboard' ? 'bg-blue-600 text-white' : 'hover:bg-slate-700'}`}>📊 Dashboard</button>
-  
-          <button onClick={() => {setView('add-tenant'); setShowReg(true)}} className={`w-full text-left p-3 rounded-lg flex items-center gap-3 ${view === 'add-tenant' ? 'bg-blue-600 text-white' : 'hover:bg-slate-700'}`}>➕ Add Tenant</button>
-  
-           {/* NEW BUTTONS START HERE */}
-          <button onClick={() => setView('houses')} className={`w-full text-left p-3 rounded-lg flex items-center gap-3 ${view === 'houses' ? 'bg-blue-600 text-white' : 'hover:bg-slate-700'}`}>🏠 House Management</button>
-  
-          <button onClick={() => setView('rooms')} className={`w-full text-left p-3 rounded-lg flex items-center gap-3 ${view === 'rooms' ? 'bg-blue-600 text-white' : 'hover:bg-slate-700'}`}>🔑 Room Status</button>
-  
-          <button onClick={() => setView('payments')} className={`w-full text-left p-3 rounded-lg flex items-center gap-3 ${view === 'payments' ? 'bg-blue-600 text-white' : 'hover:bg-slate-700'}`}>💰 Payment History</button>
-  
-          <button onClick={() => {setView('portal'); setIsAdminLoggedIn(false)}} className={`w-full text-left p-3 rounded-lg flex items-center gap-3 ${view === 'portal' ? 'bg-blue-600 text-white' : 'hover:bg-slate-700'}`}>👤 Tenant Portal</button>
-  
-          <button onClick={() => setView('settings')} className={`w-full text-left p-3 rounded-lg flex items-center gap-3 ${view === 'settings' ? 'bg-blue-600 text-white' : 'hover:bg-slate-700'}`}>⚙️ Admin Settings</button>
-        </nav>
+      )}
+
+      <div className="flex-1 overflow-y-auto">
+        {view === 'home' ? (
+          /* --- LANDING PAGE (Black with Background Image) --- */
+          <div className="h-full bg-black relative flex items-center justify-center text-center">
+            {/* Replace the URL below with your actual house image link */}
+            <div className="absolute inset-0 opacity-40 bg-[url('https://images.unsplash.com/photo-1568605114967-8130f3a36994')] bg-cover bg-center"></div>
+            
+            <div className="relative z-10 p-10">
+              <h2 className="text-5xl font-black text-white mb-6">Welcome to Bibiana House</h2>
+              <p className="text-slate-300 mb-10 text-lg">Manage your rentals with ease and transparency.</p>
+              
+              <div className="flex gap-4 justify-center">
+                <button onClick={() => setView('admin')} className="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold shadow-xl">ADMIN LOGIN</button>
+                <button onClick={() => setView('portal')} className="bg-white text-slate-900 px-8 py-4 rounded-2xl font-bold shadow-xl">TENANT PORTAL</button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          /* --- YOUR EXISTING ADMIN/PORTAL VIEWS --- */
+          <div className="p-10">
+             {/* ... paste your existing view logic (admin/portal/etc) here ... */}
+          </div>
+        )}
       </div>
+    </main>
+
+    {/* --- FOOTER --- */}
+    <footer className="bg-[#0f172a] text-slate-400 p-6 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center px-10">
+      <p className="text-xs font-bold uppercase">© 2026 BIBIANA HOUSE RENT SYSTEM. All Rights Reserved.</p>
+      
+      <div className="flex gap-6 text-xl mt-4 md:mt-0">
+        <a href="#" className="hover:text-green-500"><FaWhatsapp /></a>
+        <a href="#" className="hover:text-blue-500"><FaFacebook /></a>
+        <a href="#" className="hover:text-rose-500"><FaInstagram /></a>
+        <a href="#" className="hover:text-red-600"><FaYoutube /></a>
+        <a href="#" className="hover:text-white"><FaTiktok /></a>
+        <a href="#" className="hover:text-sky-400"><FaTwitter /></a>
+      </div>
+    </footer>
+
+  </div>
+);
 
       <div className="flex-1 p-6 lg:p-10 overflow-y-auto">
         
