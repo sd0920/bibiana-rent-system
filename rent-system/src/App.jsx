@@ -1,3 +1,6 @@
+import HouseManagement from './components/HouseManagement';
+import RoomStatus from './components/RoomStatus';
+import PaymentHistory from './components/PaymentHistory';
 import React, { useState, useEffect } from 'react';
 import { db } from './firebase'; 
 import { collection, onSnapshot, addDoc, query, orderBy, doc, deleteDoc } from 'firebase/firestore';
