@@ -1,27 +1,36 @@
 import React, { useState } from 'react';
 
 const HouseManagement = () => {
-  const [house, setHouse] = useState({ name: '', location: '', rooms: '' });
+  const [houses, setHouses] = useState([
+    { id: 1, name: 'Bibiana Main', location: 'Dar', rooms: 5 },
+  ]);
+
+  const deleteHouse = (id) => {
+    if(window.confirm("Are you sure you want to delete this house?")) {
+      setHouses(houses.filter(h => h.id !== id));
+    }
+  };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h2>🏠 House Management</h2>
-      <div className="card" style={{ padding: '20px', maxWidth: '400px', border: '1px solid #ddd' }}>
-        <label>House Name</label>
-        <input type="text" placeholder="e.g. Bibiana Annex" 
-               onChange={(e) => setHouse({...house, name: e.target.value})} />
-        
-        <label>Location</label>
-        <input type="text" placeholder="e.g. Dar es Salaam" 
-               onChange={(e) => setHouse({...house, location: e.target.value})} />
-        
-        <label>Number of Rooms</label>
-        <input type="number" placeholder="Total rooms" 
-               onChange={(e) => setHouse({...house, rooms: e.target.value})} />
-        
-        <button style={{ marginTop: '10px', backgroundColor: '#2563eb', color: 'white' }}>
-          Add Property
-        </button>
+    <div className="p-6">
+      <h2 className="text-xl font-bold mb-4">🏠 House Management</h2>
+      {/* Form to add house would go here */}
+      
+      <div className="mt-6 space-y-4">
+        {houses.map(h => (
+          <div key={h.id} className="flex justify-between items-center p-4 bg-white border rounded-xl shadow-sm">
+            <div>
+              <p className="font-bold">{h.name}</p>
+              <p className="text-sm text-slate-500">{h.location} - {h.rooms} Rooms</p>
+            </div>
+            <button 
+              onClick={() => deleteHouse(h.id)}
+              className="bg-rose-100 text-rose-600 px-4 py-2 rounded-lg font-bold hover:bg-rose-200"
+            >
+              Delete House
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );

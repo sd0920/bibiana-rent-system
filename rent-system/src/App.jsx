@@ -56,17 +56,18 @@ export default function App() {
         </div>
         <nav className="p-4 space-y-2 mt-4">
           <button onClick={() => {setView('dashboard'); setShowReg(false)}} className={`w-full text-left p-3 rounded-lg flex items-center gap-3 ${view === 'dashboard' ? 'bg-blue-600 text-white' : 'hover:bg-slate-700'}`}>📊 Dashboard</button>
-          
+  
           <button onClick={() => {setView('add-tenant'); setShowReg(true)}} className={`w-full text-left p-3 rounded-lg flex items-center gap-3 ${view === 'add-tenant' ? 'bg-blue-600 text-white' : 'hover:bg-slate-700'}`}>➕ Add Tenant</button>
-          
+  
+           {/* NEW BUTTONS START HERE */}
           <button onClick={() => setView('houses')} className={`w-full text-left p-3 rounded-lg flex items-center gap-3 ${view === 'houses' ? 'bg-blue-600 text-white' : 'hover:bg-slate-700'}`}>🏠 House Management</button>
-          
+  
           <button onClick={() => setView('rooms')} className={`w-full text-left p-3 rounded-lg flex items-center gap-3 ${view === 'rooms' ? 'bg-blue-600 text-white' : 'hover:bg-slate-700'}`}>🔑 Room Status</button>
-          
+  
           <button onClick={() => setView('payments')} className={`w-full text-left p-3 rounded-lg flex items-center gap-3 ${view === 'payments' ? 'bg-blue-600 text-white' : 'hover:bg-slate-700'}`}>💰 Payment History</button>
-          
+  
           <button onClick={() => {setView('portal'); setIsAdminLoggedIn(false)}} className={`w-full text-left p-3 rounded-lg flex items-center gap-3 ${view === 'portal' ? 'bg-blue-600 text-white' : 'hover:bg-slate-700'}`}>👤 Tenant Portal</button>
-          
+  
           <button onClick={() => setView('settings')} className={`w-full text-left p-3 rounded-lg flex items-center gap-3 ${view === 'settings' ? 'bg-blue-600 text-white' : 'hover:bg-slate-700'}`}>⚙️ Admin Settings</button>
         </nav>
       </div>
